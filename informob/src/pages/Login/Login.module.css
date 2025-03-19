@@ -1,9 +1,10 @@
 #container{
     width: 100vw;
-    height: 90vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 #login{

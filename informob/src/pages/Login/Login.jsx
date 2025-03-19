@@ -9,12 +9,8 @@ function Login(){
     const[corAviso, setCorAviso] = useState('')
     const [bordaErro, setbordaErro] = useState(styles.input);
 
-    function validar(){
-        if(email == "" || senha == ""){
-            setAviso("Preencha todos os campos!")
-            setCorAviso("red")       
-            setbordaErro(styles.inputErro)
-        }
+    function validar(){        
+        
     }
 
     return(
