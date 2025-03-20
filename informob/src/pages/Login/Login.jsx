@@ -5,30 +5,45 @@ function Login(){
 
     const[email, setEmail] = useState('')
     const[senha, setSenha] = useState('')
-    const[aviso, setAviso] = useState('')
-    const[corAviso, setCorAviso] = useState('')
-    const [bordaErro, setbordaErro] = useState(styles.input);
+    const [bordaErroEmail, setBordaErroEmail] = useState(styles.input);
+    const [bordaErroSenha, setBordaErroSenha] = useState(styles.input);
+    const [mensagemErro, setMensagemErro] = useState('transparent')
 
     function validar(){        
-        
+        if(email == '' && senha != ''){
+            setBordaErroEmail(styles.inputErro)    
+            setBordaErroSenha(styles.input)
+            setMensagemErro('red')
+        }else if(senha == '' && email != ''){
+            setBordaErroSenha(styles.inputErro)
+            setBordaErroEmail(styles.input)    
+            setMensagemErro('red')
+        }else if(email == '' && senha == ''){
+            setBordaErroSenha(styles.inputErro)
+            setBordaErroEmail(styles.inputErro)    
+            setMensagemErro('red')
+        }else{
+            setBordaErroEmail(styles.input)    
+            setBordaErroSenha(styles.input)
+            setMensagemErro('transparent')
+            //API
+        }
     }
 
     return(
         <div id={styles.container}>
-
             <div id={styles.login}>
-                <img src="" alt="logo aqui" />
+                <img src=""/>
                 <div id={styles.form}>
-                    <input className={bordaErro} onChange={e => setEmail(e.target.value)} type="text" placeholder='e-mail'/>
-                    <input className={bordaErro} onChange={e => setSenha(e.target.value)} type="password" placeholder='senha'/>
+                    <input className={bordaErroEmail} onChange={e => setEmail(e.target.value)} type="text" placeholder='e-mail'/>
+                    <input className={bordaErroSenha} onChange={e => setSenha(e.target.value)} type="password" placeholder='senha'/>
                     <button onClick={validar}>Entrar</button>
                     <div id={styles.caixaAviso}>
-                        <p style={{color: corAviso}}>{aviso}</p>
+                        <p style={{color: mensagemErro}}>Preencha todos os campos!</p>
                     </div>
                 </div>
                 <a href="">Esqueci minha senha</a>
             </div>
-
         </div>
     )
 }
