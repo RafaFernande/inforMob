@@ -3,15 +3,16 @@ import styles from './Login.module.css'
 
 function Login(){
 
-    const[email, setEmail] = useState('')
-    const[senha, setSenha] = useState('')
-    const[senhaConfimar, setSenhaConfirmar] = useState('')
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [senhaConfimar, setSenhaConfirmar] = useState('')
+
     const [bordaEmail, setBordaEmail] = useState(styles.input)
     const [bordaSenha, setBordaSenha] = useState(styles.input)
     const [bordaSenhaConfirmar, setBordaSenhaConfirmar] = useState(styles.input)
-    const [mensagemCor, setMensagemCor] = useState('transparent')
-    const [loginDisplay, setLoginDisplay] = useState('flex')
-    const [cadastroDisplay, setCadastroDisplay] = useState('none')
+
+    const [erroDisplay, setErroDisplay] = useState('none')
+    const [telaAtual, setTelaAtual] = useState('recuperarSenha');
 
     function validarLogin(){        
         let erro = false;
@@ -28,24 +29,22 @@ function Login(){
         } else {
             setBordaSenha(styles.input);
         }
-     
-        setMensagemCor(erro ? 'red' : 'transparent');
+        setErroDisplay(erro ? 'block' : 'none');
      
         if (!erro) {
-            mudarTela()
-           // Chamar API
+            console.log("Login realizado!");
+            // Chamar API
         }
     }
 
     function validarCadastro(){
-         let erro = false;
+        let erro = false;
         if (email === '') {
             setBordaEmail(styles.inputErro);
            erro = true;
         } else {
             setBordaEmail(styles.input);
         }
-     
         if (senha === '') {
             setBordaSenha(styles.inputErro);
            erro = true;
@@ -54,60 +53,58 @@ function Login(){
         }
         if (senhaConfimar === '') {
             setBordaSenhaConfirmar(styles.inputErro);
-           erro = true;
+            erro = true;
         } else {
             setBordaSenhaConfirmar(styles.input);
         }
-
-        setMensagemCor(erro ? 'red' : 'transparent');
+        setErroDisplay(erro ? 'block' : 'none');
         if(!erro){
+            console.log('cadastro realizado!');
             //Chamar API
         }
     }
 
-    function mudarTela(){
-        if(loginDisplay === 'flex'){
-            setLoginDisplay('none');
-           setCadastroDisplay('flex');
-           setMensagemCor('transparent')
-           setBordaEmail(styles.input)
-           setBordaSenha(styles.input)
-           setBordaSenhaConfirmar(styles.input)
-        }else{
-            setLoginDisplay('flex');
-           setCadastroDisplay('none');
-           setMensagemCor('transparent')
-           setBordaEmail(styles.input)
-           setBordaSenha(styles.input)
-           setBordaSenhaConfirmar(styles.input)
-        }
+    function resetarErros(){
+        setBordaEmail(styles.input);
+        setBordaSenha(styles.input);
+        setBordaSenhaConfirmar(styles.input);
+        setErroDisplay('none');
+
     }
 
     return(
         <div id={styles.container}>
-            <div id={styles.login} style={{display: loginDisplay}}>
-                <img src=""/>
-                <div id={styles.form}>
+            {telaAtual === 'login' && (
+                <div className={styles.login}>
                     <input className={bordaEmail} onChange={e => setEmail(e.target.value)} type="text" placeholder='e-mail'/>
                     <input className={bordaSenha} onChange={e => setSenha(e.target.value)} type="password" placeholder='senha'/>
                     <button onClick={validarLogin}>Entrar</button>
-                    <button onClick={mudarTela}>Cadastrar</button>
-                    <div id={styles.caixaAviso}>
-                        <p style={{color: mensagemCor}}>Preencha todos os campos!</p>
-                    </div>
+                    <button onClick={() => {setTelaAtual('cadastro'), resetarErros()}}>Cadastrar</button>
+                    <p style={{display: erroDisplay, color: 'red'}}>Preencha todos os campos!</p>
+                    <p style={{cursor: 'pointer'}} onClick={() => {setTelaAtual('recuperarSenha')}}>Esqueci minha senha</p>
                 </div>
-                <p style={{cursor: 'pointer'}}>Esqueci a minha senha</p>
-            </div>
-            <div id={styles.cadastro} style={{display: cadastroDisplay}}>
-                <input className={bordaEmail} onChange={e => setEmail(e.target.value)} type="text" placeholder='e-mail' />
-                <input className={bordaSenha} onChange={e => setSenha(e.target.value)} type="password" placeholder='senha'/>
-                <input className={bordaSenhaConfirmar} onChange={e => setSenhaConfirmar(e.target.value)} type="password" placeholder='repetir senha'/>
-                <button onClick={validarCadastro}>Cadastrar</button>
-                <p style={{color: mensagemCor}}>Preencha todos os campos!</p>
-                <p style={{cursor: 'pointer'}} onClick={mudarTela}>Já tenho uma conta</p>
-            </div>
+        )}
+            {telaAtual === 'cadastro' && (
+                <div className={styles.cadastro}>
+                    <input className={bordaEmail} onChange={e => setEmail(e.target.value)} type="text" placeholder='e-mail' />
+                    <input className={bordaSenha} onChange={e => setSenha(e.target.value)} type="password" placeholder='senha'/>
+                    <input className={bordaSenhaConfirmar} onChange={e => setSenhaConfirmar(e.target.value)} type="password" placeholder='repetir senha'/>
+                    <button onClick={validarCadastro}>Cadastrar</button>
+                    <p style={{display: erroDisplay, color: 'red'}}>Preencha todos os campos!</p>
+                    <p style={{cursor: 'pointer'}} onClick={() => {setTelaAtual('login'), resetarErros()}} >Já tenho uma conta</p>
+                </div>
+            )}
+
+            {telaAtual === 'recuperarSenha' &&(
+                <div className={styles.recuperarSenha}>
+                    <p>Digite o e-mail do seu cadastro para recuperar a senha</p>
+                    <input type="text" placeholder='e-mail'/>
+                    <button>Enviar e-mail</button>
+                </div>     
+            )}
+           
         </div>
     )
 }
 
-export default Login
+export default Login;
