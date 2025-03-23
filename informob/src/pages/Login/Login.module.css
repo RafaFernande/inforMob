@@ -26,11 +26,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-}
-
-.recuperarSenha > input{
-    width: 80%;
-    height: 25%;
     border-radius: 5px;
 }
 
