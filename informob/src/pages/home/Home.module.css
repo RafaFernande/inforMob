@@ -1,0 +1,65 @@
+#main{
+    width: 100vw;
+    min-height: 60vh;
+    padding: 0;
+    margin: 0;
+}
+
+#pagina{
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#central{
+    width: 60vw;
+    height: auto;
+    background-color: #fafafa;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    overflow-y: auto;
+}
+
+#esquerda, #direita{
+    width: 20vw;
+    min-height: 100%;
+}
+
+.card{
+    width: 90%;
+    min-height: 300px;
+    margin: 20px 0px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 0px;
+}
+
+h2{
+    margin: 0;
+    width: 90%;
+}
+
+#linha{
+    border: 0px;
+    width: 95%;
+    height: 2px;
+    background-color: black;
+    margin: 1px;
+}
+
+.banner{
+    width: 95%;
+    height: 300px;
+}
+
+.previa{
+    width: 95%;
+}

@@ -7,7 +7,7 @@ import Home from './pages/home/Home';
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{minHeight: '100vh'}}>
         <Cabecalho />
         <Routes>
           <Route path="/" element={<Login />} /> {/* Defina a rota para o login */}
